@@ -22,7 +22,7 @@ public class GameMap extends Body{
 
         enemies = new Array<>();
         Random randInt = new Random();
-        for (int i = 0; i < 10; i++){ enemies.add(new Enemy(randInt.nextInt(1000) - 500, randInt.nextInt(1000) - 500));}
+        for (int i = 0; i < 10; i++){ enemies.add(new Enemy());}
     }
     public void update(){
         for (Enemy enemy : enemies){
@@ -31,8 +31,8 @@ public class GameMap extends Body{
 
         weapon.update(enemies);
 
-        if(enemies.notEmpty() && weapon.is_shoting()){
-            bullets.add(new Bullet(weapon.getTarget(enemies), weapon.getX(), weapon.getY(), 1000));
+        if(enemies.notEmpty() && weapon.isShooting()){
+            bullets.add(new Bullet(weapon.getTarget(enemies), 1000, weapon));
         }
         for (Bullet bullet : bullets){
             bullet.update();
@@ -44,14 +44,14 @@ public class GameMap extends Body{
 
         player.draw(batch);
 
-        weapon.draw(batch);
+        weapon.draw(batch, weapon.getX(), weapon.getY(), weapon.getWidth() / 2, weapon.getHeight() / 2, weapon.getWidth(), weapon.getHeight(), 1, 1, weapon.getAngle());
 
         for (Enemy enemy : enemies){
             enemy.draw(batch);
         }
 
         for (Bullet bullet : bullets){
-            bullet.draw(batch);
+            bullet.draw(batch, bullet.getX(), bullet.getY(), bullet.getWidth() / 2, bullet.getHeight() / 2, bullet.getWidth(), bullet.getHeight(), 2,2, bullet.getAngle());
         }
     }
 }

@@ -39,6 +39,8 @@ public class GameScreen implements Screen {
         player = new Player();
 
         hpBar = new HpBar(player);
+
+
         stage.addActor(hpBar);
 
         //weapon = new Weapon(player, 0.5f);
