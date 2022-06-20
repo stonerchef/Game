@@ -18,8 +18,7 @@ public class GameScreen implements Screen {
 
     private Player player;
     private HpBar hpBar;
-    private Array<Enemy> enemies;
-    private Weapon weapon;
+    //private Weapon weapon;
     private GameMap gameMap;
 
     public enum State{
@@ -42,12 +41,9 @@ public class GameScreen implements Screen {
         hpBar = new HpBar(player);
         stage.addActor(hpBar);
 
-        weapon = new Weapon(player);
+        //weapon = new Weapon(player, 0.5f);
 
-        enemies = new Array<>();
-        for (int i = 0; i < 10; i++){ enemies.add(new Enemy());}
-
-        gameMap = new GameMap();
+        gameMap = new GameMap(player);
     }
 
     @Override
@@ -80,10 +76,8 @@ public class GameScreen implements Screen {
         player.hp -= 0.2f;
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
-        for (Enemy enemy : enemies){
-            enemy.update(player);
-        }
-        weapon.update(enemies);
+        gameMap.update();
+        //weapon.update(gameMap.enemies);
 
         hpBar.update();
 
@@ -93,13 +87,7 @@ public class GameScreen implements Screen {
     public void draw(){
         gameMap.draw(game.batch);
 
-        player.draw(game.batch);
-
-        weapon.draw(game.batch);
-
-        for (Enemy enemy : enemies){
-            enemy.draw(game.batch);
-        }
+        //weapon.draw(game.batch);
 
         stage.draw();
         stage.act();

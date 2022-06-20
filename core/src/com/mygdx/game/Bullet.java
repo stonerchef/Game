@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 
 public class Bullet extends Body{
@@ -9,12 +10,12 @@ public class Bullet extends Body{
     private float velocityY;
     private Enemy target;
 
-    public Bullet(Weapon weapon, Array<Enemy> targets){
+    public Bullet(Enemy target, float x, float y, float speeed){
 
-        this.target = weapon.getTarget(targets);
-        createBody(weapon.getX(), getY(), 8,8);
+        this.target = target;
+        createBody(x, y, 8,8);
         createTextureRegion("bullet.png");
-        speed = 100;
+        speed = speeed;
         Direction();
     }
 
@@ -34,7 +35,8 @@ public class Bullet extends Body{
         if(target.getY() < getY()) velocityY *= -1;
     }
 
-    public void update(float delta){
+    public void update(){
+        float delta = Gdx.graphics.getDeltaTime();
         setX(getX() + (velocityX * speed * delta));
         setY(getY() + (velocityY * speed * delta));
     }

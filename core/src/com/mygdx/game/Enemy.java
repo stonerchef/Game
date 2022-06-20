@@ -5,17 +5,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 
-import java.util.Random;
-
 public class Enemy extends Body{
 
     float movementSpeedPreSec;
 
-    public Enemy() {
-        Random randInt = new Random();
+    public Enemy(int x, int y) {
         //(float)randInt.nextInt(Gdx.graphics.getWidth() * 2 ) - Gdx.graphics.getWidth() / 2,
         // (float)randInt.nextInt(Gdx.graphics.getHeight() * 2 ) - Gdx.graphics.getHeight() / 2,
-        createBody((float)randInt.nextInt(1000) - 500, (float)randInt.nextInt(1000) - 500, 64, 64);
+        createBody(x, y, 64, 64);
         movementSpeedPreSec = 60;
         createTextureRegion("player1.png");
     }

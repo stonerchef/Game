@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -11,11 +12,14 @@ public class Weapon extends Body{
     private Player player;
     private Enemy target;
     private float angle;
-    public Weapon(Player p){
+    float attackSpeed;
+    float attackTimer;
+    public Weapon(Player p, float attackT){
+        attackSpeed = attackT;
         player = p;
         createBody(player.getX(), player.getX(), 64, 128);
         createTextureRegion("sword.png");
-        target = new Enemy();
+        target = new Enemy(0, 0);
     }
     public Enemy getTarget(Array<Enemy> Targets){
         double val_min = Double.MAX_VALUE;
@@ -30,7 +34,7 @@ public class Weapon extends Body{
             }
             i++;
         }
-        return Targets.get(index_min);
+        return new Enemy((int)Targets.get(index_min).getX(), (int)Targets.get(index_min).getY());
     }
     private float calculateAngle(){
         double angleTemp = Math.atan2(target.getY() - player.getY(), target.getX() - player.getX());
@@ -43,6 +47,15 @@ public class Weapon extends Body{
             target = getTarget(Targets);
             angle = calculateAngle();
         }
+
+        attackTimer += Gdx.graphics.getDeltaTime();
+    }
+    public boolean is_shoting(){
+        if (attackTimer >= attackSpeed) {
+            attackTimer -= attackSpeed;
+            return true;
+        }
+        return false;
     }
     @Override
     public void draw(SpriteBatch batch){
