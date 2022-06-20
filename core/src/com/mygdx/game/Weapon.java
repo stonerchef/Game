@@ -1,50 +1,52 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import java.lang.Math;
 
 public class Weapon extends Body{
-
     private Player player;
-
-    public Weapon(Player player){
-        createBody(0, 0, 16, 32);
-        creatTextureRegion("weapon.png");
-        this.player = player;
+    private Enemy target;
+    private float angle;
+    public Weapon(Player p){
+        player = p;
+        createBody(player.getX(), player.getX(), 64, 128);
+        createTextureRegion("sword.png");
+        target = new Enemy();
     }
-
-    public Enemy getTarget(Array<Enemy> targets){
-        double minVal = Double.MAX_VALUE;
-        int minIndex = 0;
+    public Enemy getTarget(Array<Enemy> Targets){
+        double val_min = Double.MAX_VALUE;
+        int index_min = 0;
         int i = 0;
-        double temp;
-
-        for(Enemy enemy : targets){
-            temp = Math.pow((double)enemy.getX() - (double)player.getX(), 2) + Math.pow((double)enemy.getY() - (double)player.getY(), 2);
-            if(temp < minVal){
-                minVal = temp;
-                minIndex = i;
+        for (Enemy enemy : Targets){
+            double temp = Math.pow(enemy.getX() - player.getX(), 2) +
+                    Math.pow(enemy.getY() - player.getY(), 2);
+            if(temp < val_min){
+                val_min = temp;
+                index_min = i;
             }
             i++;
         }
-
-        return targets.get(minIndex);
-
+        return Targets.get(index_min);
     }
-
-    private float CalculateAngle(Enemy target){
-
+    private float calculateAngle(){
         double angleTemp = Math.atan2(target.getY() - player.getY(), target.getX() - player.getX());
         return (float) Math.toDegrees(angleTemp);
-
     }
-
-    public void update(Array<Enemy> targets){
-        if(targets.notEmpty())
-        setAngle(CalculateAngle(getTarget(targets)));
-
-        setX(player.getX() + (1.5f * player.getWidth()));
-        setY(player.getY() + (player.getHeight() / 2));
+    public void update(Array<Enemy> Targets){
+        setX(player.getX()+ (float)1.2 * player.getWidth());
+        setY(player.getY() + player.getHeight() / 2);
+        if(Targets.notEmpty()) {
+            target = getTarget(Targets);
+            angle = calculateAngle();
+        }
     }
-
+    @Override
+    public void draw(SpriteBatch batch){
+        super.draw(batch, getX(), getY(), getWidth() / 2, getHeight() / 2  ,
+                getWidth(), getHeight(), 1, 1, calculateAngle());
+    }
 }

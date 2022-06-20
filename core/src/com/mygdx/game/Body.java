@@ -9,7 +9,6 @@ public abstract class Body {
 
     public Rectangle body;
     private TextureRegion textureRegion;
-    private float angle;
 
     public float getX(){
         return body.x;
@@ -43,19 +42,11 @@ public abstract class Body {
         body.height = x;
     }
 
-    public float getAngle(){
-        return angle;
-    }
-
-    public void setAngle(float angle){
-        this.angle = angle;
-    }
-
-    public void creatTextureRegion(String imagePath){
+    public void createTextureRegion(String imagePath){
         textureRegion = new TextureRegion(new Texture(imagePath));
     }
 
-    public void creatBody(){
+    public void createBody(){
         body = new Rectangle();
     }
 
@@ -80,6 +71,5 @@ public abstract class Body {
         batch.draw(textureRegion, x, y, originX, originY, width, height, scaleX, scaleY, angle);
         batch.end();
     }
-
 
 }

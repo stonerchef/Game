@@ -13,7 +13,7 @@ public class Bullet extends Body{
 
         this.target = weapon.getTarget(targets);
         createBody(weapon.getX(), getY(), 8,8);
-        creatTextureRegion("bullet.png");
+        createTextureRegion("bullet.png");
         speed = 100;
         Direction();
     }
