@@ -9,9 +9,12 @@ import java.util.Random;
 
 public abstract class Body {
 
-    public Rectangle body;
+    private Rectangle body;
     private TextureRegion textureRegion;
     private float angle;
+    private final float mapSizeWidth = 2280;
+    private final float mapSizeHeight = 1528;
+    private float damage;
 
     public float getX(){
         return body.x;
@@ -45,6 +48,14 @@ public abstract class Body {
         body.height = x;
     }
 
+    public float getDamage(){
+        return damage;
+    }
+
+    public void setDamage(float damage){
+        this.damage = damage;
+    }
+
     public float getAngle(){
         return angle;
     }
@@ -53,8 +64,24 @@ public abstract class Body {
         this.angle = angle;
     }
 
+    public float getMapSizeWidth(){
+        return mapSizeWidth;
+    }
+
+    public float getMapSizeHeight(){
+        return mapSizeHeight;
+    }
+
     public void createTextureRegion(String imagePath){
         textureRegion = new TextureRegion(new Texture(imagePath));
+    }
+
+    public TextureRegion getTextureRegion(){
+        return textureRegion;
+    }
+
+    public Rectangle getBody(){
+        return body;
     }
 
     public void createBody(){

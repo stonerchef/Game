@@ -8,14 +8,16 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class Enemy extends Body{
 
-    float movementSpeedPreSec;
+    private float movementSpeedPreSec;
+    private float hp;
 
     public Enemy() {
-        float x = getRandomFloatBetweenAB(0,3024);
-        float y = getRandomFloatBetweenAB(0, 2400);
+        float x = getRandomFloatBetweenAB(0, getMapSizeWidth() - 64);
+        float y = getRandomFloatBetweenAB(0, getMapSizeHeight() - 64);
         createBody(x, y, 64, 64);
         movementSpeedPreSec = 60;
         createTextureRegion("player1.png");
+        hp = 100;
     }
 
     public void update(Player target){
@@ -30,4 +32,17 @@ public class Enemy extends Body{
         this.setX(this.getX() + (float)temp);
         this.setY(this.getY() + (float)(Math.sin(angle) * movementSpeedPreSec * delta));
     }
+
+    public float getHp(){
+        return hp;
+    }
+
+    public void setHp(float hp){
+        this.hp = hp;
+    }
+
+    public boolean isDead(){
+        return hp <= 0;
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 
 import java.util.Random;
@@ -12,16 +13,18 @@ public class Bullet extends Body{
     private float velocityY;
     private Enemy target;
     private Weapon weapon;
+    private float damage;
 
     public Bullet(Enemy target, float speed, Weapon weapon){
 
         this.target = target;
         this.weapon = weapon;
-        createBody(weapon.getX(), weapon.getY(), 32,32);
+        createBody(weapon.getX() + weapon.getWidth() / 2, weapon.getY() + weapon.getHeight() / 2, 32,32);
         createTextureRegion("bullet.png");
         this.speed = speed;
         setAngle(weapon.getAngle());
         Direction();
+        setDamage(weapon.getDamage());
     }
 
     private void Direction(){
@@ -50,6 +53,16 @@ public class Bullet extends Body{
         float delta = Gdx.graphics.getDeltaTime();
         setX(getX() + (velocityX * speed * delta));
         setY(getY() + (velocityY * speed * delta));
+    }
+
+    @Override
+    public void draw(SpriteBatch batch){
+        if(!(getBody().overlaps(weapon.getBody())))
+        {
+            batch.begin();
+            batch.draw(getTextureRegion(), getX(), getY());
+            batch.end();
+        }
     }
 
 

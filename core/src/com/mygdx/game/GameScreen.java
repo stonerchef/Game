@@ -32,11 +32,13 @@ public class GameScreen implements Screen {
     public GameScreen(MainGame game) {
         this.game = game;
 
+        player = new Player();
+
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.position.x = player.getX();
+        camera.position.y = player.getY();
 
         stage = new Stage();
-
-        player = new Player();
 
         hpBar = new HpBar(player);
 

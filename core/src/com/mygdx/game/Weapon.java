@@ -15,8 +15,9 @@ public class Weapon extends Body{
     public Weapon(Player p, float attackT){
         attackSpeed = attackT;
         player = p;
-        createBody(player.getX(), player.getX(), 64, 128);
+        createBody(player.getX(), player.getX(), 128, 64);
         createTextureRegion("sword.png");
+        setDamage(10);
     }
     public Enemy getTarget(Array<Enemy> Targets){
         double minVal = Double.MAX_VALUE;
@@ -38,8 +39,8 @@ public class Weapon extends Body{
         return (float) Math.toDegrees(angleTemp);
     }
     public void update(Array<Enemy> Targets){
-        setX(player.getX()+ (float)1.2 * player.getWidth());
-        setY(player.getY() + player.getHeight() / 2);
+        setX(player.getX() + 0.65f * player.getWidth());
+        setY(player.getY() - player.getHeight() / 2);
         if(Targets.notEmpty()) setAngle(calculateAngle(getTarget(Targets)));
 
         attackTimer += Gdx.graphics.getDeltaTime();
