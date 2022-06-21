@@ -14,6 +14,7 @@ public class GameMap {
     public Array<Bullet> bullets;
     public Player player;
     public Weapon weapon;
+    private Wave wave;
     private TextureRegion textureRegion;
     private final float mapSizeWidth = 2280;
     private final float mapSizeHeight = 1528;
@@ -22,6 +23,8 @@ public class GameMap {
         createTextureRegion("background1.png");
         border = new Rectangle(0,0, mapSizeWidth, mapSizeHeight);
 
+        wave = new Wave();
+
         player = p;
 
         bullets = new Array<>();
@@ -29,10 +32,11 @@ public class GameMap {
         weapon = new Weapon(player, 0.1f);
 
         enemies = new Array<>();
-        Random randInt = new Random();
-        for (int i = 0; i < 10; i++){ enemies.add(new Enemy());}
+        //Random randInt = new Random();
+        //for (int i = 0; i < 10; i++){ enemies.add(new Enemy());}
     }
     public void update(){
+        wave.update(enemies);
 
         checkHit();
 
