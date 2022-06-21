@@ -12,7 +12,7 @@ public class GameMap extends Body{
     public Weapon weapon;
     public GameMap(Player p){
         createBody(0,0, 3000, 2000);
-        createTextureRegion("gameMap.png");
+        createTextureRegion("background2.png");
 
         player = p;
 
