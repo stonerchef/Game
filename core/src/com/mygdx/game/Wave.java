@@ -11,6 +11,7 @@ public class Wave {
     int lastSubWave;
     int enemiesForSubWave;
     float timeBetweenSubWaves;
+    int xd;
 
     public Wave( int waveNum, float timer, float Time, int sub_waves, int enemiesForSub_wave){
         waveNumber = waveNum;
