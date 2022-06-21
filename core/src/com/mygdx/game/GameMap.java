@@ -23,7 +23,7 @@ public class GameMap {
         createTextureRegion("background1.png");
         border = new Rectangle(0,0, mapSizeWidth, mapSizeHeight);
 
-        wave = new Wave();
+        wave = new Wave(this);
 
         player = p;
 

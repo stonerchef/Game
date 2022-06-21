@@ -10,9 +10,11 @@ public class Wave {
     float timer;
     float subTimer;
     float time;
+    GameMap map;
 
-    public Wave(){
+    public Wave(GameMap map){
         //enemies = new Array<Enemy>();
+        this.map = map;
         number = 1;
         timer = 0;
         subTimer = 0;
@@ -27,15 +29,15 @@ public class Wave {
         //if (timer >= time) endOfWave();
         if (subTimer >= 5){
             subTimer = 0;
-            spawnEnemies(enemies);
+            spawnEnemies();
         }
     }
-    public static void spawnEnemies(Array<Enemy> enemies){
+    public void spawnEnemies(){
         //int a = 4 + number * number / 2;
         //int b = 8 + number * number / 2;
         //Random random = new Random();
         //int n = a + random.nextInt() * (b - a);
-        for(int i = 0; i < 10; i++) enemies.add(new Enemy());
+        for(int i = 0; i < 10; i++) map.enemies.add(new Enemy());
     }
     public void endOfWave(){
         number += 1;
