@@ -51,7 +51,7 @@ public class GameMap {
 
         weapon.update(enemies);
 
-        if(enemies.notEmpty() && weapon.isShooting()){
+        if(movingEnemies() > 0 && weapon.isShooting()){
             bullets.add(new Bullet(weapon.getTarget(enemies), 1000, weapon));
         }
 
@@ -60,6 +60,14 @@ public class GameMap {
             if(bullet.getBody().overlaps(border)) bullet.update();
             else iterBullet.remove();
         }
+    }
+    public int movingEnemies(){
+        if(enemies.isEmpty()) return 0;
+        int num = 0;
+        for(Enemy enemy : enemies){
+            if(!enemy.isSpawning) num+=1;
+        }
+        return num;
     }
 
     public void checkHit(){

@@ -80,6 +80,10 @@ public abstract class Body {
         return textureRegion;
     }
 
+    public void setTextureRegion(String imagePath){
+        textureRegion = new TextureRegion(new Texture(imagePath));
+    }
+
     public Rectangle getBody(){
         return body;
     }

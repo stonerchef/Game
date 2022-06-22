@@ -24,11 +24,13 @@ public class Weapon extends Body{
         int minIndex = 0;
         int i = 0;
         for (Enemy enemy : Targets){
-            double temp = Math.pow(enemy.getX() - player.getX(), 2) +
-                    Math.pow(enemy.getY() - player.getY(), 2);
-            if(temp < minVal){
-                minVal = temp;
-                minIndex = i;
+            if(enemy.isSpawning == false) {
+                double temp = Math.pow(enemy.getX() - player.getX(), 2) +
+                        Math.pow(enemy.getY() - player.getY(), 2);
+                if (temp < minVal) {
+                    minVal = temp;
+                    minIndex = i;
+                }
             }
             i++;
         }
