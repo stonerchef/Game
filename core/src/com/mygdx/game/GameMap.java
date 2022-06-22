@@ -133,6 +133,7 @@ public class GameMap {
     public void playerHit(){
         for(Enemy enemy : enemies){
             if(enemy.getBody().overlaps(player.getBody())) player.setHp(player.getHp() - enemy.getDemage());
+            if(player.getHp() < 0) player.setHp(0);
         }
     }
 
