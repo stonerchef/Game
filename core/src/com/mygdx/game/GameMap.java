@@ -41,7 +41,7 @@ public class GameMap {
 
     }
     public void update(){
-        wave.update(enemies);
+        wave.update();
 
         checkHit();
         playerHit();
@@ -49,6 +49,10 @@ public class GameMap {
 
         for (Enemy enemy : enemies){
             enemy.update(player);
+        }
+
+        for (Item item : items){
+            item.update(player);
         }
 
         weapon.update(enemies);
@@ -99,6 +103,12 @@ public class GameMap {
 
         float x = enemy.getX() + random.nextInt() % 80 - 80;
         float y = enemy.getY() + random.nextInt() % 80 - 80;
+
+        if(x < 0) x=0;
+        else if (x + 32 > getMapSizeWidth()) x = getMapSizeWidth() - 32;
+        else if (y < 0) y = 0;
+        else if (y + 32 > getMapSizeHeight()) x = getMapSizeHeight() - 32;
+
         if(life > 90) items.add(new Life(x, y, "life.png"));
 
         int i;
@@ -109,6 +119,12 @@ public class GameMap {
         while(i > 0){
             x = enemy.getX() + random.nextInt() % 100 - 50;
             y = enemy.getY() + random.nextInt() % 100 - 50;
+
+            if(x < 0) x=0;
+            else if (x + 32 > getMapSizeWidth()) x = getMapSizeWidth() - 32;
+            else if (y < 0) y = 0;
+            else if (y + 32 > getMapSizeHeight()) x = getMapSizeHeight() - 32;
+
             items.add(new Experience(x, y, "exp.png"));
             i--;
         }

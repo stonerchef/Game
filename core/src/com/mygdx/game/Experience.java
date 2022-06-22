@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
+
 public class Experience extends Item{
     public Experience(float x,  float y, String name) {
         createTextureRegion(name);
