@@ -12,33 +12,38 @@ import java.util.Random;
 public class GameMap {
     public Array<Enemy> enemies;
     public Array<Bullet> bullets;
+    private Array<Item> items;
     public Player player;
     public Weapon weapon;
+    private Bullet bullet;
+    private Enemy enemy;
     private Wave wave;
     private TextureRegion textureRegion;
     private final float mapSizeWidth = 2280;
     private final float mapSizeHeight = 1528;
     private final Rectangle border;
-    public GameMap(Player p){
+    public GameMap(Player player){
         createTextureRegion("background1.png");
         border = new Rectangle(0,0, mapSizeWidth, mapSizeHeight);
 
         wave = new Wave(this);
 
-        player = p;
+        this.player = player;
 
         bullets = new Array<>();
 
         weapon = new Weapon(player, 0.1f);
 
         enemies = new Array<>();
-        //Random randInt = new Random();
-        //for (int i = 0; i < 10; i++){ enemies.add(new Enemy());}
+
+        items = new Array<>();
+
     }
     public void update(){
         wave.update(enemies);
 
         checkHit();
+        playerHit();
 
         for (Enemy enemy : enemies){
             enemy.update(player);
@@ -49,8 +54,9 @@ public class GameMap {
         if(enemies.notEmpty() && weapon.isShooting()){
             bullets.add(new Bullet(weapon.getTarget(enemies), 1000, weapon));
         }
+
         for (Iterator<Bullet> iterBullet = bullets.iterator(); iterBullet.hasNext();){
-            Bullet bullet = iterBullet.next();
+            bullet = iterBullet.next();
             if(bullet.getBody().overlaps(border)) bullet.update();
             else iterBullet.remove();
         }
@@ -58,19 +64,27 @@ public class GameMap {
 
     public void checkHit(){
         for(Iterator<Bullet> iterBullet = bullets.iterator(); iterBullet.hasNext();){
-            Bullet bullet = iterBullet.next();
+             bullet = iterBullet.next();
             for(Iterator<Enemy> iterEnemy = enemies.iterator(); iterEnemy.hasNext();){
-                Enemy enemy = iterEnemy.next();
+                enemy = iterEnemy.next();
                 if(bullet.getBody().overlaps(enemy.getBody()))
                 {
                     enemy.setHp(enemy.getHp() - bullet.getDamage());
                     iterBullet.remove();
 
                     if(enemy.isDead()){
+                        items.add(new Item(enemy.getX(), enemy.getY(), "exp.png"));
                         iterEnemy.remove();
                     }
+                    break;
                 }
             }
+        }
+    }
+
+    public void playerHit(){
+        for(Enemy enemy : enemies){
+            if(enemy.getBody().overlaps(player.getBody())) player.hp -= 0.5f;
         }
     }
 
@@ -89,6 +103,10 @@ public class GameMap {
 
         for (Bullet bullet : bullets){
             bullet.draw(batch, bullet.getX(), bullet.getY(), bullet.getWidth() / 2, bullet.getHeight() / 2, bullet.getWidth(), bullet.getHeight(), 2,2, bullet.getAngle());
+        }
+
+        for(Item item : items){
+            item.draw(batch);
         }
     }
 

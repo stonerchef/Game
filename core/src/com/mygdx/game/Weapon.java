@@ -17,7 +17,7 @@ public class Weapon extends Body{
         player = p;
         createBody(player.getX(), player.getX(), 128, 64);
         createTextureRegion("sword.png");
-        setDamage(10);
+        setDamage(50);
     }
     public Enemy getTarget(Array<Enemy> Targets){
         double minVal = Double.MAX_VALUE;

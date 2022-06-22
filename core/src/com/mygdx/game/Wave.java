@@ -17,7 +17,7 @@ public class Wave {
         this.map = map;
         number = 1;
         timer = 0;
-        subTimer = 0;
+        subTimer = 3;
         time = 90;
 
     }
@@ -26,18 +26,18 @@ public class Wave {
         timer += delta;
         subTimer += delta;
 
-        //if (timer >= time) endOfWave();
-        if (subTimer >= 5){
+        if (timer >= time) endOfWave();
+        if (subTimer >= 2){
             subTimer = 0;
             spawnEnemies();
         }
     }
     public void spawnEnemies(){
-        //int a = 4 + number * number / 2;
-        //int b = 8 + number * number / 2;
-        //Random random = new Random();
-        //int n = a + random.nextInt() * (b - a);
-        for(int i = 0; i < 10; i++) map.enemies.add(new Enemy());
+        int a = 4 + number * number / 4;
+        int b = 8 + number * number / 4;
+        Random random = new Random();
+        int n = a + random.nextInt() % b;
+        for(int i = 0; i < n; i++) map.enemies.add(new Enemy());
     }
     public void endOfWave(){
         number += 1;

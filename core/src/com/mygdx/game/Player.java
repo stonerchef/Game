@@ -9,6 +9,7 @@ public class Player extends Body{
     public float hp;
     public int hpMax;
 
+
     public Player(){
         createBody(getMapSizeWidth() / 2, getMapSizeHeight() / 2, 48, 48);
         createTextureRegion("player.png");

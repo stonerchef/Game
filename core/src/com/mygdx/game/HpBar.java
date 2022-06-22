@@ -13,9 +13,9 @@ import jdk.internal.foreign.Utils;
 public class HpBar extends ProgressBar {
 
     private Player player;
-    public HpBar(Player p) {
+    public HpBar(Player player) {
         super(0f, 1f, 0.01f, false, new ProgressBarStyle());
-        player = p;
+        this.player = player;
 
         int height = 30;
         this.setPosition(50, Gdx.graphics.getHeight() - 50);

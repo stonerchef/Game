@@ -77,7 +77,6 @@ public class GameScreen implements Screen {
 
     public void update(float delta){
         ScreenUtils.clear(0, 0, 0.25f,1);
-        player.hp -= 0.2f;
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         gameMap.update();
