@@ -10,6 +10,7 @@ public class Enemy extends Body{
 
     private float movementSpeedPreSec;
     private float hp;
+    private float demage;
     private float spawningTimer;
     public boolean isSpawning;
 
@@ -22,6 +23,7 @@ public class Enemy extends Body{
         hp = 30;
         spawningTimer = 0;
         isSpawning = true;
+        demage = 0;
     }
 
     public void update(Player target){
@@ -30,6 +32,7 @@ public class Enemy extends Body{
             if (spawningTimer > 2){
                 setTextureRegion("player1.png");
                 isSpawning = false;
+                demage = 20;
             }
         }
         else {
@@ -45,6 +48,7 @@ public class Enemy extends Body{
             this.setY(this.getY() + (float) (Math.sin(angle) * movementSpeedPreSec * delta));
         }
     }
+    public float getDemage(){return demage;}
 
     public float getHp(){
         return hp;

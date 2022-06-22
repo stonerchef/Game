@@ -19,11 +19,11 @@ public class HpBar extends ProgressBar {
 
         int height = 30;
         this.setPosition(50, Gdx.graphics.getHeight() - 50);
-        getStyle().background = getColoredDrawable(player.hpMax*2, height, Color.RED);
+        getStyle().background = getColoredDrawable(player.getHpMax()*2, height, Color.RED);
         getStyle().knob = getColoredDrawable(0, height, Color.GREEN);
-        getStyle().knobBefore = getColoredDrawable(player.hpMax*2, height, Color.GREEN);
+        getStyle().knobBefore = getColoredDrawable(player.getHpMax()*2, height, Color.GREEN);
 
-        setWidth(player.hpMax*2);
+        setWidth(player.getHpMax()*2);
         setHeight(height);
 
         setAnimateDuration(0.0f);
@@ -32,7 +32,7 @@ public class HpBar extends ProgressBar {
         setAnimateDuration(0.25f);
     }
 
-    public void update(){this.setValue(player.hp / player.hpMax);}
+    public void update(){this.setValue(player.getHp() / player.getHpMax());}
 
 
 

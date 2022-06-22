@@ -73,17 +73,19 @@ public class GameMap {
     }
 
     public void checkHit(){
+        Random random = new Random();
         for(Iterator<Bullet> iterBullet = bullets.iterator(); iterBullet.hasNext();){
              bullet = iterBullet.next();
             for(Iterator<Enemy> iterEnemy = enemies.iterator(); iterEnemy.hasNext();){
                 enemy = iterEnemy.next();
-                if(bullet.getBody().overlaps(enemy.getBody()))
+                if(bullet.getBody().overlaps(enemy.getBody()) && !enemy.isSpawning)
                 {
                     enemy.setHp(enemy.getHp() - bullet.getDamage());
                     iterBullet.remove();
 
                     if(enemy.isDead()){
-                        items.add(new Item(enemy.getX(), enemy.getY(), "exp.png"));
+                        items.add(new Experience(enemy.getX(), enemy.getY(), "exp.png"));
+                        spawnItems(enemy, random);
                         iterEnemy.remove();
                     }
                     break;
@@ -91,10 +93,30 @@ public class GameMap {
             }
         }
     }
+    public void spawnItems(Enemy enemy, Random random){
+        int life = random.nextInt() % 100;
+        int exp = random.nextInt() % 100;
+
+        float x = enemy.getX() + random.nextInt() % 80 - 80;
+        float y = enemy.getY() + random.nextInt() % 80 - 80;
+        if(life > 90) items.add(new Life(x, y, "life.png"));
+
+        int i;
+        if(exp <= 60) i = 1;
+        else if (exp <= 90) i = 2;
+        else i = 3;
+
+        while(i > 0){
+            x = enemy.getX() + random.nextInt() % 100 - 50;
+            y = enemy.getY() + random.nextInt() % 100 - 50;
+            items.add(new Experience(x, y, "exp.png"));
+            i--;
+        }
+    }
 
     public void playerHit(){
         for(Enemy enemy : enemies){
-            if(enemy.getBody().overlaps(player.getBody())) player.hp -= 0.5f;
+            if(enemy.getBody().overlaps(player.getBody())) player.setHp(player.getHp() - enemy.getDemage());
         }
     }
 
@@ -102,6 +124,7 @@ public class GameMap {
         for(Iterator<Item> iterator = items.iterator(); iterator.hasNext();){
             item = iterator.next();
             if(item.getBody().overlaps(player.getBody())){
+                item.addVal(player);
                 iterator.remove();
             }
         }
@@ -111,8 +134,6 @@ public class GameMap {
         batch.begin();
         batch.draw(textureRegion, 0, 0);
         batch.end();
-
-        player.draw(batch);
 
         weapon.draw(batch, weapon.getX(), weapon.getY(), weapon.getWidth() / 2, weapon.getHeight() / 2, weapon.getWidth(), weapon.getHeight(), 1, 1, weapon.getAngle());
 
@@ -127,6 +148,8 @@ public class GameMap {
         for(Item item : items){
             item.draw(batch);
         }
+
+        player.draw(batch);
     }
 
     public float getMapSizeWidth(){

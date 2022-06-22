@@ -54,5 +54,4 @@ public class Weapon extends Body{
         }
         return false;
     }
-
 }
