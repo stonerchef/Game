@@ -27,7 +27,7 @@ public class Enemy extends Body{
     public void update(Player target){
         if(isSpawning){
             spawningTimer += Gdx.graphics.getDeltaTime();
-            if (spawningTimer > 3){
+            if (spawningTimer > 2){
                 setTextureRegion("player1.png");
                 isSpawning = false;
             }

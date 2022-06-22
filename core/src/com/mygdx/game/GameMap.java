@@ -16,6 +16,7 @@ public class GameMap {
     public Player player;
     public Weapon weapon;
     private Bullet bullet;
+    private Item item;
     private Enemy enemy;
     private Wave wave;
     private TextureRegion textureRegion;
@@ -44,6 +45,7 @@ public class GameMap {
 
         checkHit();
         playerHit();
+        collectItems();
 
         for (Enemy enemy : enemies){
             enemy.update(player);
@@ -93,6 +95,15 @@ public class GameMap {
     public void playerHit(){
         for(Enemy enemy : enemies){
             if(enemy.getBody().overlaps(player.getBody())) player.hp -= 0.5f;
+        }
+    }
+
+    public void collectItems(){
+        for(Iterator<Item> iterator = items.iterator(); iterator.hasNext();){
+            item = iterator.next();
+            if(item.getBody().overlaps(player.getBody())){
+                iterator.remove();
+            }
         }
     }
 
