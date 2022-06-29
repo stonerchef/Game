@@ -12,7 +12,7 @@ public class Player extends Body{
 
     public Player(){
         createBody(getMapSizeWidth() / 2, getMapSizeHeight() / 2, 48, 48);
-        createTextureRegion("player.png");
+        createTextureRegion("left_player.png");
         movementSpeed = 240;
         hpMax = 100;
         hp = hpMax;
@@ -20,11 +20,13 @@ public class Player extends Body{
     }
 
     public void moveLeft(OrthographicCamera camera, float delta){
+        setTextureRegion("left_player.png");
         if(getX() > 1) setX(getX() - delta * movementSpeed);
         camera.position.x = getX();
     }
 
     public void moveRight(OrthographicCamera camera, float delta){
+        setTextureRegion("right_player.png");
         if(getX() + getWidth() < getMapSizeWidth() - 1) setX(getX() + delta * movementSpeed);
         camera.position.x = getX();
     }

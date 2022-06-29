@@ -30,7 +30,7 @@ public class Enemy extends Body{
         if(isSpawning){
             spawningTimer += Gdx.graphics.getDeltaTime();
             if (spawningTimer > 2){
-                setTextureRegion("player1.png");
+                setTextureRegion("left_enemy.png");
                 isSpawning = false;
                 demage = 20;
             }
@@ -40,9 +40,8 @@ public class Enemy extends Body{
             double angle = Math.atan2(target.getY() - this.getY(), target.getX() - this.getX());
             double temp = Math.cos(angle) * movementSpeedPreSec * delta;
 
-            //if(temp < 0){enemy_img =  new Texture("left_enemy.png");}
-            //else {enemy_img =  new Texture("right_enemy.png");}
-            // = new Texture("hit_boxenemy.png");
+            if(temp < 0){setTextureRegion("left_enemy.png");}
+            else {setTextureRegion("right_enemy.png");}
 
             this.setX(this.getX() + (float) temp);
             this.setY(this.getY() + (float) (Math.sin(angle) * movementSpeedPreSec * delta));
