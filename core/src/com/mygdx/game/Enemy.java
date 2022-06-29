@@ -38,7 +38,7 @@ public class Enemy extends Body{
             if (spawningTimer > 2){
                 setTextureRegion(leftTexture);
                 isSpawning = false;
-                damage = 1.5f;
+                damage = 0.8f;
             }
         }
         else {
