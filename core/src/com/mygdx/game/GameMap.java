@@ -1,9 +1,12 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 
 import java.util.Iterator;
@@ -23,6 +26,10 @@ public class GameMap {
     private final float mapSizeWidth = 2280;
     private final float mapSizeHeight = 1528;
     private final Rectangle border;
+    private int score;
+
+
+
     public GameMap(Player player){
         createTextureRegion("background1.png");
         border = new Rectangle(0,0, mapSizeWidth, mapSizeHeight);
@@ -38,6 +45,8 @@ public class GameMap {
         enemies = new Array<>();
 
         items = new Array<>();
+
+        score = 0;
 
     }
     public void update(){
@@ -132,7 +141,7 @@ public class GameMap {
 
     public void playerHit(){
         for(Enemy enemy : enemies){
-            if(enemy.getBody().overlaps(player.getBody())) player.setHp(player.getHp() - enemy.getDemage());
+            if(enemy.getBody().overlaps(player.getBody())) player.setHp(player.getHp() - enemy.getDamage());
             if(player.getHp() < 0) player.setHp(0);
         }
     }
@@ -143,6 +152,7 @@ public class GameMap {
             if(item.getBody().overlaps(player.getBody())){
                 item.addVal(player);
                 iterator.remove();
+                score += 10;
             }
         }
     }
@@ -179,5 +189,9 @@ public class GameMap {
 
     public void createTextureRegion(String imagePath){
         textureRegion = new TextureRegion(new Texture(imagePath));
+    }
+
+    public int getScore(){
+        return this.score;
     }
 }

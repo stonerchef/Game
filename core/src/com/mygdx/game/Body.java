@@ -84,6 +84,10 @@ public abstract class Body {
         textureRegion = new TextureRegion(new Texture(imagePath));
     }
 
+    public void setTextureRegion(TextureRegion textureRegion){
+        this.textureRegion = textureRegion;
+    }
+
     public Rectangle getBody(){
         return body;
     }

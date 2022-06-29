@@ -39,6 +39,7 @@ public class MainMenuScreen implements Screen {
     public void show() {
 
         stage = new Stage();
+
         viewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         skin = new Skin(Gdx.files.internal("pixthulhu-ui.json"));

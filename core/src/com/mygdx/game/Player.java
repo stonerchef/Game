@@ -2,6 +2,8 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Player extends Body{
 
@@ -9,10 +11,14 @@ public class Player extends Body{
     private float hp;
     private int hpMax;
     private float experience;
+    private TextureRegion leftTexture;
+    private TextureRegion rightTexture;
 
     public Player(){
-        createBody(getMapSizeWidth() / 2, getMapSizeHeight() / 2, 48, 48);
+        createBody(getMapSizeWidth() / 2, getMapSizeHeight() / 2, 24, 64);
         createTextureRegion("left_player.png");
+        leftTexture = new TextureRegion(new Texture("left_player.png"));
+        rightTexture = new TextureRegion(new Texture("right_player.png"));
         movementSpeed = 240;
         hpMax = 100;
         hp = hpMax;
@@ -20,19 +26,20 @@ public class Player extends Body{
     }
 
     public void moveLeft(OrthographicCamera camera, float delta){
-        setTextureRegion("left_player.png");
+        setTextureRegion(leftTexture);
         if(getX() > 1) setX(getX() - delta * movementSpeed);
         camera.position.x = getX();
+        hp--;
     }
 
     public void moveRight(OrthographicCamera camera, float delta){
-        setTextureRegion("right_player.png");
-        if(getX() + getWidth() < getMapSizeWidth() - 1) setX(getX() + delta * movementSpeed);
+        setTextureRegion(rightTexture);
+        if(getX() + getWidth() < getMapSizeWidth() - 84) setX(getX() + delta * movementSpeed);
         camera.position.x = getX();
     }
 
     public void moveUp(OrthographicCamera camera, float delta){
-        if(getY() + getHeight() < getMapSizeHeight() - 1)setY(getY() + delta * movementSpeed);
+        if(getY() + getHeight() < getMapSizeHeight() - 48)setY(getY() + delta * movementSpeed);
         camera.position.y = getY();
     }
 

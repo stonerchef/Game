@@ -4,9 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
+
+import javax.swing.text.LabelView;
 
 public class GameScreen implements Screen {
 
@@ -18,8 +23,14 @@ public class GameScreen implements Screen {
 
     private Player player;
     private HpBar hpBar;
-    //private Weapon weapon;
     private GameMap gameMap;
+    private int score;
+    private String scoreName;
+    private BitmapFont bitmapFont;
+    private Skin skin;
+    private Label text;
+    private Label.LabelStyle textStyle;
+
 
     public enum State{
         PAUSE,
@@ -41,13 +52,25 @@ public class GameScreen implements Screen {
         stage = new Stage();
 
         hpBar = new HpBar(player);
+        skin = new Skin(Gdx.files.internal("pixthulhu-ui.json"));
+        score = 0;
+        scoreName = "score: " + score;
+        bitmapFont = skin.getFont("font");
+
+        textStyle = new Label.LabelStyle();
+        textStyle.font = bitmapFont;
+        text = new Label(scoreName, textStyle);
+        text.setBounds(50, 50, 50, 50);
+        text.setFontScale(1.5f,1.5f);
+
+
 
 
         stage.addActor(hpBar);
-
-        //weapon = new Weapon(player, 0.5f);
+        stage.addActor(text);
 
         gameMap = new GameMap(player);
+        skin = new Skin(Gdx.files.internal("pixthulhu-ui.json"));
     }
 
     @Override
@@ -67,7 +90,7 @@ public class GameScreen implements Screen {
                 pause();
                 break;
             case STOPPED:
-                Gdx.app.exit();
+                game.setScreen(new GameOverScreen(game, text));
                 break;
             default:
                 break;
@@ -80,9 +103,15 @@ public class GameScreen implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         gameMap.update();
-        //weapon.update(gameMap.enemies);
+        score = gameMap.getScore();
+        scoreName = "score: " + score;
+        text.setText(scoreName);
+
 
         hpBar.update();
+        if(player.getHp() <= 0){
+            setGameState(State.STOPPED);
+        }
 
         inputHandler(delta);
     }
@@ -90,7 +119,6 @@ public class GameScreen implements Screen {
     public void draw(){
         gameMap.draw(game.batch);
 
-        //weapon.draw(game.batch);
 
         stage.draw();
         stage.act();

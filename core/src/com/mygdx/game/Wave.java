@@ -30,13 +30,13 @@ public class Wave {
         }
         if (subTimer >= 2){
             subTimer = 0;
-            if(map.enemies.size < 200)
+            if(map.enemies.size < 50)
                 spawnEnemies();
         }
     }
     public void spawnEnemies(){
-        int a = 4 + number * number / 16;
-        int b = 8 + number * number / 16;
+        int a = 4 + (number * number / 16) % 25;
+        int b = 8 + (number * number / 16) % 25;
         Random random = new Random();
         int n = a + random.nextInt() % b;
         for(int i = 0; i < n; i++) map.enemies.add(new Enemy());
