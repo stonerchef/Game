@@ -64,8 +64,6 @@ public class GameScreen implements Screen {
         text.setFontScale(1.5f,1.5f);
 
 
-
-
         stage.addActor(hpBar);
         stage.addActor(text);
 

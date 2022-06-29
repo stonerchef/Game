@@ -33,10 +33,6 @@ public class MainMenuScreen implements Screen {
         this.game = game;
 
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-    }
-
-    @Override
-    public void show() {
 
         stage = new Stage();
 
@@ -47,6 +43,12 @@ public class MainMenuScreen implements Screen {
         table = new Table();
         table.setFillParent(true);
 
+    }
+
+    @Override
+    public void show() {
+
+
         stage.addActor(table);
 
         addButton("Play").addListener(new ClickListener(){
@@ -56,8 +58,12 @@ public class MainMenuScreen implements Screen {
             }
         });
 
-        addButton("Option");
-        addButton("Credits");
+        addButton("Credits").addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new CreditsScreen(game));
+            }
+        });
         addButton("Quit").addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -70,6 +76,8 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
+
+        ScreenUtils.clear(0, 0.0f, 0.0f,1);
 
         update();
         draw();

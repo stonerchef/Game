@@ -12,27 +12,20 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
+public class CreditsScreen implements Screen{
 
-public class GameOverScreen implements Screen {
+    private MainGame game;
 
-    final MainGame game;
-
-    OrthographicCamera camera;
     private Table table;
     private Skin skin;
+    private Label author1;
+    private Label author2;
 
-
-
-    Label score;
     private Stage stage;
 
-    public GameOverScreen(MainGame game, Label score) {
+    public CreditsScreen(MainGame game){
         this.game = game;
 
-        camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
-        this.score = score;
-        this.score.setBounds(Gdx.graphics.getWidth() / 2 - 125, Gdx.graphics.getHeight() / 2 - 125, 250, 250);
         stage = new Stage();
 
         skin = new Skin(Gdx.files.internal("pixthulhu-ui.json"));
@@ -40,32 +33,17 @@ public class GameOverScreen implements Screen {
         table = new Table();
         table.setFillParent(true);
 
-        table.add(score);
+        Label.LabelStyle textStyle = new Label.LabelStyle();
+        textStyle.font = skin.getFont("font");
+
+        author1 = new Label("Adam Korta", textStyle);
+        author2 = new Label("Filip Szczepanski", textStyle);
+        author1.setFontScale(5);
+        author2.setFontScale(5);
+        table.add(author1);
         table.row();
-
-
-    }
-
-    @Override
-    public void show() {
-
-        addButton("Restart").addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new GameScreen(game));
-            }
-        });
-
-        addButton("Quit").addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.exit();
-            }
-        });
-
-        stage.addActor(table);
-
-        Gdx.input.setInputProcessor(stage);
+        table.add(author2);
+        table.row();
 
     }
 
@@ -77,22 +55,35 @@ public class GameOverScreen implements Screen {
         return button;
     }
 
+    @Override
+    public void show() {
 
+        stage.addActor(table);
+
+        addButton("Back").addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new MainMenuScreen(game));
+            }
+        });
+
+        Gdx.input.setInputProcessor(stage);
+
+    }
 
     @Override
     public void render(float delta) {
 
         ScreenUtils.clear(0, 0.0f, 0.0f,1);
 
-        stage.draw();
         stage.act();
+        stage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
 
     }
-
 
     @Override
     public void pause() {

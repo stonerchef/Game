@@ -29,7 +29,6 @@ public class Player extends Body{
         setTextureRegion(leftTexture);
         if(getX() > 1) setX(getX() - delta * movementSpeed);
         camera.position.x = getX();
-        hp--;
     }
 
     public void moveRight(OrthographicCamera camera, float delta){
